@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Validation\Rule;
-
 return [
 
     /*
@@ -61,10 +59,7 @@ return [
                 'app_name'              => 'required|string|max:50',
                 'environment'           => 'required|string|max:50',
                 'environment_custom'    => 'required_if:environment,other|max:50',
-                'app_debug'             => [
-                    'required',
-                    Rule::in(['true', 'false']),
-                ],
+                'app_debug'             => 'required|boolean|in:true,false',
                 'app_log_level'         => 'required|string|max:50',
                 'app_url'               => 'required|url',
                 'database_connection'   => 'required|string|max:50',
@@ -77,18 +72,23 @@ return [
                 'cache_driver'          => 'required|string|max:50',
                 'session_driver'        => 'required|string|max:50',
                 'queue_driver'          => 'required|string|max:50',
-                'redis_hostname'        => 'required|string|max:50',
-                'redis_password'        => 'required|string|max:50',
-                'redis_port'            => 'required|numeric',
+                'redis_hostname'        => 'string|max:50',
+                'redis_password'        => 'string|max:50',
+                'redis_port'            => 'numeric',
                 'mail_driver'           => 'required|string|max:50',
                 'mail_host'             => 'required|string|max:50',
                 'mail_port'             => 'required|string|max:50',
-                'mail_username'         => 'required|string|max:50',
-                'mail_password'         => 'required|string|max:50',
-                'mail_encryption'       => 'required|string|max:50',
+                'mail_username'         => 'string|max:50',
+                'mail_password'         => 'string|max:50',
+                'mail_encryption'       => 'string|max:50',
                 'pusher_app_id'         => 'max:50',
                 'pusher_app_key'        => 'max:50',
                 'pusher_app_secret'     => 'max:50',
+                'registration_captcha'  => 'required|boolean|in:true,false',
+                'enable_registration'   => 'required|boolean|in:true,false',
+                'requires_approval'     => 'required|boolean|in:true,false',
+                'nocaptcha_secret'      => 'max:100',
+                'nocaptcha_sitekey'     => 'max:100',
             ],
         ],
     ],
