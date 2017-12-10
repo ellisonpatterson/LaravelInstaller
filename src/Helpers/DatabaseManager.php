@@ -20,8 +20,6 @@ class DatabaseManager
     {
         $outputLog = new BufferedOutput;
 
-        $this->sqlite($outputLog);
-
         return $this->migrate($outputLog);
     }
 
@@ -34,25 +32,9 @@ class DatabaseManager
     private function migrate($outputLog)
     {
         try{
-            Artisan::call('migrate', ["--force"=> true], $outputLog);
-        }
-        catch(Exception $e){
-            return $this->response($e->getMessage(), 'danger', $outputLog);
-        }
-
-        return $this->seed($outputLog);
-    }
-
-    /**
-     * Seed the database.
-     *
-     * @param collection $outputLog
-     * @return array
-     */
-    private function seed($outputLog)
-    {
-        try{
-            Artisan::call('db:seed', [], $outputLog);
+            Artisan::call('migrate:refresh', [
+                '--seed' => true
+            ], $outputLog);
         }
         catch(Exception $e){
             return $this->response($e->getMessage(), 'danger', $outputLog);

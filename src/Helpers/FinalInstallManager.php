@@ -18,7 +18,7 @@ class FinalInstallManager
         $outputLog = new BufferedOutput;
 
         $this->generateKey($outputLog);
-        $this->publishVendorAssets($outputLog);
+        // $this->publishVendorAssets($outputLog);
 
         return $outputLog->fetch();
     }
@@ -35,7 +35,7 @@ class FinalInstallManager
             Artisan::call('key:generate', ["--force"=> true], $outputLog);
         }
         catch(Exception $e){
-            return $this->response($e->getMessage());
+            return $this->response($e->getMessage(), 'danger', $outputLog);
         }
 
         return $outputLog;
@@ -53,9 +53,26 @@ class FinalInstallManager
             Artisan::call('vendor:publish', ['--all' => true], $outputLog);
         }
         catch(Exception $e){
-            return $this->response($e->getMessage());
+            return $this->response($e->getMessage(), 'danger', $outputLog);
         }
 
         return $outputLog;
+    }
+
+    /**
+     * Return a formatted error messages.
+     *
+     * @param $message
+     * @param string $status
+     * @param collection $outputLog
+     * @return array
+     */
+    private function response($message, $status = 'danger', $outputLog)
+    {
+        return [
+            'status' => $status,
+            'message' => $message,
+            'dbOutputLog' => $outputLog->fetch()
+        ];
     }
 }
