@@ -24,7 +24,7 @@ class LaravelInstallerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->publishFiles();
-        $this->loadRoutesFrom(base_path('routes/web.php'));
+        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
     }
 
     /**
